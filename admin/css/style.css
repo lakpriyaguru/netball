@@ -1,0 +1,120 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    padding-top: 80px; /* Adjusted for fixed header */
+}
+
+.container {
+    max-width: 80%;
+    margin-top: 80px;
+}
+
+.login-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.login-form,
+.update-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    width: 100%;
+}
+
+.alert {
+    display: none;
+}
+
+.fixed-top {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    display: none;
+}
+
+
+.fixed-bottom {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+#userEmail {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.btn-sm {
+    padding: 5px 10px;
+}
+
+footer {
+    background-color: #f8f9fa;
+    padding: 10px 0;
+}
+
+/* Style the table */
+.table {
+    width: 100%;
+    border-collapse: collapse; /* Collapse borders */
+    margin-top: 20px; /* Add space above the table */
+}
+
+/* Header styles */
+.table thead {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+}
+
+/* Table cells */
+.table th, .table td {
+    padding: 10px; /* Padding for better spacing */
+    text-align: center; /* Center text in cells */
+    vertical-align: middle; /* Center text vertically */
+    border: 1px solid #dee2e6; /* Light border */
+}
+
+/* Striped rows */
+.table tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* Light gray for even rows */
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* White for odd rows */
+}
+
+/* Hover effect */
+.table tbody tr:hover {
+    background-color: #e2e6ea; /* Gray background on hover */
+}
+
+/* Button style */
+.add-button {
+    width: auto; /* Adjust button width */
+    float: right; /* Float the buttons to the right */
+    margin: 5px 0; /* Add some margin between the buttons */
+}
+
