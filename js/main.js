@@ -50,52 +50,6 @@ function fetchMatchData() {
 }
 
 // Function to create a match card
-// function createMatchCard(match) {
-//   const card = document.createElement("div");
-//   card.classList.add("match-summary");
-
-//   // Decide what text to show based on match status
-//   let matchText = "";
-//   let matchTextClass = ""; // For adding the 'live-text' class
-
-//   if (match.status === 2) {
-//     // Use match.win field from Firebase to determine the winner or if it's a draw
-//     if (match.win === 3) {
-//       matchText = "It's a Draw!";
-//     } else if (match.win === 1) {
-//       matchText = `${match.team1} Wins!`;
-//     } else if (match.win === 2) {
-//       matchText = `${match.team2} Wins!`;
-//     }
-//   } else if (match.status === 1) {
-//     matchText = "🔴 LIVE"; // Show LIVE if the match is ongoing
-//     matchTextClass = "live-text"; // Add class for live animation
-//   }
-
-//   card.innerHTML = `
-//     <img src="img/uni/${match.team1.toLowerCase()}.png" alt="${
-//     match.team1
-//   } Logo" class="team-logo">
-//     <div class="match-info">
-//       <div class="team-names">${match.team1} vs ${match.team2}</div>
-//       <div class="score">${
-//         match.status !== 0 &&
-//         match.score1 !== undefined &&
-//         match.score2 !== undefined
-//           ? `${match.score1} - ${match.score2}`
-//           : ""
-//       }</div>
-//       <div class="winner-text ${matchTextClass}">${matchText}</div>
-//     </div>
-//     <img src="img/uni/${match.team2.toLowerCase()}.png" alt="${
-//     match.team2
-//   } Logo" class="team-logo">
-//   `;
-
-//   return card;
-// }
-
-// Function to create a match card
 function createMatchCard(match) {
   const card = document.createElement("div");
   card.classList.add("match-summary");
@@ -117,7 +71,7 @@ function createMatchCard(match) {
     matchText = "🔴 LIVE"; // Show LIVE if the match is ongoing
     matchTextClass = "live-text"; // Add class for live animation
   } else if (match.status === 0) {
-    matchText = `Scheduled for ${match.matchTime}`; // Show the scheduled time for upcoming matches
+    // matchText = `Scheduled for ${match.matchTime}`; // Show the scheduled time for upcoming matches
   }
 
   card.innerHTML = `
@@ -130,7 +84,9 @@ function createMatchCard(match) {
       <div class="col-4 text-center match-info">
         <div class="team-names">${match.team1} vs ${match.team2}</div>
         <div class="score">${
-          match.score1 !== undefined && match.score2 !== undefined
+          match.status != 0 &&
+          match.score1 !== undefined &&
+          match.score2 !== undefined
             ? `${match.score1} - ${match.score2}`
             : ""
         }</div>

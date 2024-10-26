@@ -17,7 +17,7 @@ h1 {
     font-size: 2.5rem; /* Fallback for older browsers */
     font-size: calc(1.5rem + 1.5vw); /* Responsive size */
     color: #333;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
     text-align: center;
 }
 
@@ -25,7 +25,15 @@ h2 {
     font-size: 2rem; /* Fallback for older browsers */
     font-size: calc(1.3rem + 1.2vw); /* Responsive size */
     color: #333;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
+    text-align: center;
+}
+
+h5 {
+    font-size: 1.5rem; /* Fallback for older browsers */
+    font-size: calc(1rem + 0.5vw); /* Responsive size */
+    color: #333;
+    /* margin-bottom: 20px; */
     text-align: center;
 }
 
@@ -36,43 +44,40 @@ h2 {
 
 /* Match Summary */
 .match-summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     background-color: #d6eaff;
     border-radius: 90px;
     padding: 20px;
     margin: 20px 0;
-    height: 175px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .team-logo {
     width: 125px;
-    height: 125px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 0;
 }
 
 .match-info {
-    text-align: center;
-    flex-grow: 1; 
-    padding: 0 15px;
 }
 
 .team-names {
     font-size: 1.5rem; /* Fallback */
-    font-size: calc(1rem + 0.5vw); /* Responsive */
+    font-size: calc(.7rem + 0.5vw); /* Responsive */
     font-weight: bold;
     color: #2c3e50;
+
+    margin-bottom: 1px;
+    text-align: center;
 }
 
 .score {
     font-size: 2.5rem; /* Fallback */
-    font-size: calc(1.5rem + 1vw); /* Responsive */
     font-weight: bold;
     color: #0b346e;
+
+    font-family: 'Oxanium', sans-serif; /* Ensure quotes are correct */
+    font-size: calc(0.9rem + 1.vw);
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 1000;
 }
 
 .winner-text {
