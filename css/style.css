@@ -5,10 +5,12 @@ body {
     padding-top: 70px; /* Space for the fixed navbar */
     margin: 0;
     min-height: 100vh;
+    align-items: center;
+    align-content: center;
 }
 
 .scrollable-container {
-    max-height: 750px; /* Adjust max-height as needed */
+    max-height: 700px; /* Adjust max-height as needed */
     overflow-y: auto; /* Enable vertical scrolling */
     padding-right: 20px; /* Adds space for scrollbar */
 }
@@ -92,15 +94,13 @@ h5 {
     font-size: calc(.7rem + 0.5vw); /* Responsive */
     font-weight: bold;
     color: #2c3e50;
-    margin-bottom: 1px;
     text-align: center;
 }
 
 .match-id{
-    /* font-size: 1.5rem; Fallback */
-    /* font-size: calc(.5rem + 0.5vw); Responsive */
+    font-size: 1.5rem; /* Fallback */
+    font-size: calc(.5rem + 0.5vw); /* Responsive */
     color: #2c3e50;
-    /* margin-bottom: 0px; */
     text-align: center;
 } */
 
@@ -109,15 +109,15 @@ h5 {
     font-weight: bold;
     color: #0b346e;
     font-family: 'Oxanium', sans-serif; /* Ensure quotes are correct */
-    font-size: calc(0.9rem + 1.vw);
+    font-size: calc(0.9rem + 1vw);
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 1000;
 }
 
 .winner-text {
-    font-size: 1.0rem; /* Fallback */
-    font-size: calc(1rem + 0.3vw); /* Responsive */
+    font-size: 1.5rem; /* Fallback */
+    font-size: calc(.7rem + 0.5vw); /* Responsive */
     font-weight: bold;
     color: #4caf50;
 }

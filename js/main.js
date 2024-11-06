@@ -96,6 +96,7 @@ function createMatchCard(match) {
           }
         </div>
         <div class="winner-text ${matchTextClass}">${matchText}</div>
+        <div class="">Group A Match</div>
       </div>
       <div class="col-4 text-center">
         <img src="img/uni/${
