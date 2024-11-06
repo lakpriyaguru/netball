@@ -52,7 +52,7 @@ function fetchMatchData() {
 // Function to create a match card
 function createMatchCard(match) {
   const card = document.createElement("div");
-  card.classList.add("match-summary", "match-list");
+  card.classList.add("match-summary");
 
   // Decide what text to show based on match status
   let matchText = "";
@@ -77,30 +77,25 @@ function createMatchCard(match) {
   card.innerHTML = `
     <div class="row">
       <div class="col-4 text-center">
-        <img src="img/uni/${
-          match.team1 === "?" ? "unknown" : match.team1.toLowerCase()
-        }.png" alt="${match.team1} Logo" class="team-logo img-fluid">
+        <img src="img/uni/${match.team1.toLowerCase()}.png" alt="${
+    match.team1
+  } Logo" class="team-logo img-fluid">
       </div>
       <div class="col-4 text-center match-info">
-        <div class="match-id">Match ${
-          match.matchnum
-        }</div> <!-- Dynamic match ID -->
         <div class="team-names">${match.team1} vs ${match.team2}</div>
-        <div class="score">
-          ${
-            match.status !== 0 &&
-            match.score1 !== undefined &&
-            match.score2 !== undefined
-              ? `${match.score1} - ${match.score2}`
-              : ""
-          }
-        </div>
+        <div class="score">${
+          match.status != 0 &&
+          match.score1 !== undefined &&
+          match.score2 !== undefined
+            ? `${match.score1} - ${match.score2}`
+            : ""
+        }</div>
         <div class="winner-text ${matchTextClass}">${matchText}</div>
       </div>
       <div class="col-4 text-center">
-        <img src="img/uni/${
-          match.team2 === "?" ? "unknown" : match.team2.toLowerCase()
-        }.png" alt="${match.team2} Logo" class="team-logo img-fluid">
+        <img src="img/uni/${match.team2.toLowerCase()}.png" alt="${
+    match.team2
+  } Logo" class="team-logo img-fluid">
       </div>
     </div>
   `;

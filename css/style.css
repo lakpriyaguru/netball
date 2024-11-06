@@ -7,6 +7,34 @@ body {
     min-height: 100vh;
 }
 
+.scrollable-container {
+    max-height: 750px; /* Adjust max-height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 20px; /* Adds space for scrollbar */
+}
+
+/* Custom Scrollbar for Small Look */
+.scrollable-container::-webkit-scrollbar {
+    width: 1px;  /* Set the width of the scrollbar */
+    height: 6px; /* If you also want a small horizontal scrollbar */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+    background-color: #888; /* Light gray color for the thumb */
+    border-radius: 10px;     /* Rounded corners for the thumb */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Darker color on hover */
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Light background for the track */
+    border-radius: 10px;  /* Rounded corners for the track */
+}
+
+
+
 /* Navbar */
 .navbar {
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
@@ -42,11 +70,15 @@ h5 {
     height: 30%;
 }
 
+.wayoscope-logo {
+    width: 25%;
+  }
+
 /* Match Summary */
 .match-summary {
     background-color: #d6eaff;
     border-radius: 90px;
-    padding: 20px;
+    padding: 10px;
     margin: 20px 0;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -55,24 +87,27 @@ h5 {
     width: 125px;
 }
 
-.match-info {
-}
-
 .team-names {
     font-size: 1.5rem; /* Fallback */
     font-size: calc(.7rem + 0.5vw); /* Responsive */
     font-weight: bold;
     color: #2c3e50;
-
     margin-bottom: 1px;
     text-align: center;
 }
+
+.match-id{
+    /* font-size: 1.5rem; Fallback */
+    /* font-size: calc(.5rem + 0.5vw); Responsive */
+    color: #2c3e50;
+    /* margin-bottom: 0px; */
+    text-align: center;
+} */
 
 .score {
     font-size: 2.5rem; /* Fallback */
     font-weight: bold;
     color: #0b346e;
-
     font-family: 'Oxanium', sans-serif; /* Ensure quotes are correct */
     font-size: calc(0.9rem + 1.vw);
     font-optical-sizing: auto;

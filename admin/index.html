@@ -61,12 +61,11 @@
             <table class="table table-bordered" id="matchesTable">
                 <thead id="matchesHeading" style="text-align: center;">
                     <tr>
-                        <th scope="col">Match ID</th>
+                        <th scope="col">Match #</th>
                         <th scope="col">Team 1</th>
                         <th scope="col">Team 2</th>
                         <th scope="col">Score 1</th>
                         <th scope="col">Score 2</th>
-                        <th scope="col">Match Time</th>
                         <th scope="col">Status</th>
                         <th scope="col">Winner</th>
                         <th scope="col">Actions</th>
@@ -92,16 +91,20 @@
                     <div class="modal-body">
                         <form id="addMatchForm">
                             <div class="mb-3">
-                                <label for="team1" class="form-label">Team 1 Name</label>
-                                <input type="text" class="form-control" id="team1" required>
+                                <label for="matchnum" class="form-label">Match Number</label>
+                                <input type="number" class="form-control" id="matchnum" min="1" required>
                             </div>
                             <div class="mb-3">
-                                <label for="team2" class="form-label">Team 2 Name</label>
-                                <input type="text" class="form-control" id="team2" required>
+                                <label for="team1" class="form-label">Team 1</label>
+                                <select class="form-control" id="team1" required>
+                                    <option value="" disabled selected>Select Team 1</option>
+                                </select>
                             </div>
                             <div class="mb-3">
-                                <label for="matchtime" class="form-label">Match Time</label>
-                                <input type="datetime-local" class="form-control" id="matchtime" required>
+                                <label for="team2" class="form-label">Team 2</label>
+                                <select class="form-control" id="team2" required>
+                                    <option value="" disabled selected>Select Team 2</option>
+                                </select>
                             </div>
                             <button type="submit" class="btn btn-success">Add Match</button>
                         </form>
@@ -109,6 +112,7 @@
                 </div>
             </div>
         </div>
+
 
         <!-- Edit Match Modal -->
         <div class="modal fade" id="editMatchModal" tabindex="-1" aria-labelledby="editMatchModalLabel"
@@ -122,16 +126,16 @@
                     <div class="modal-body">
                         <form id="editMatchForm">
                             <div class="mb-3">
+                                <label for="editmatchnum" class="form-label">Match Number</label>
+                                <input type="number" class="form-control" id="editmatchnum" min="1" required>
+                            </div>
+                            <div class="mb-3">
                                 <label for="editTeam1" class="form-label">Team 1</label>
                                 <input type="text" class="form-control" id="editTeam1" required />
                             </div>
                             <div class="mb-3">
                                 <label for="editTeam2" class="form-label">Team 2</label>
                                 <input type="text" class="form-control" id="editTeam2" required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="editMatchTime" class="form-label">Scheduled Match Time</label>
-                                <input type="datetime-local" class="form-control" id="editMatchTime" required />
                             </div>
                             <button type="submit" class="btn btn-success">Save Changes</button>
                         </form>

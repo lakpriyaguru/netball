@@ -55,7 +55,7 @@ document
 function fetchMatches() {
   database.ref("matches").on("value", (snapshot) => {
     const matches = snapshot.val();
-    console.log("Fetched matches:", matches);
+    // console.log("Fetched matches:", matches);
     const matchesContainer = document.getElementById("matchesContainer");
     matchesContainer.innerHTML = ""; // Clear previous matches
 
@@ -78,7 +78,7 @@ function fetchMatches() {
       document.getElementById("matchesHeading").classList.remove("d-none");
       document.getElementById("matchesTable").classList.remove("d-none");
     } else {
-      console.log("No matches found");
+      // console.log("No matches found");
     }
   });
 }
@@ -134,38 +134,59 @@ function generateRandomMatchId() {
 
 function handleAddMatch(e) {
   e.preventDefault();
+
+  // Get team and match time values
   const team1 = document.getElementById("team1").value;
   const team2 = document.getElementById("team2").value;
-  const matchTime = document.getElementById("matchtime").value;
+  const matchnum = document.getElementById("matchnum").value;
 
-  const matchId = generateRandomMatchId(); // Generate a random match ID
+  // Generate a random match ID
+  const matchId = generateRandomMatchId();
 
+  // Prepare the new match object
   const newMatch = {
-    id: matchId, // Use the generated ID
     team1,
     team2,
-    matchTime,
+    matchnum,
     score1: 0,
     score2: 0,
     status: 0,
     win: 0,
   };
 
-  // Save new match to Firebase
-  database
-    .ref(`matches/${matchId}`)
-    .set(newMatch)
-    .then(() => {
-      showAlert("success", "Match added successfully!", 1500);
-      fetchMatches(); // Refresh the matches list
-      const addMatchModal = bootstrap.Modal.getInstance(
-        document.getElementById("addMatchModal")
-      );
-      addMatchModal.hide(); // Close modal after successful submission
-    })
-    .catch((error) =>
-      showAlert("error", "Error adding match: " + error.message, 1500)
-    );
+  // Show confirmation dialog using SweetAlert
+  Swal.fire({
+    title: "Are you sure?",
+    html: `
+      <p>You are about to add a match:</p>
+      <p>Match ${matchnum}</p>
+      <p><strong>${team1}</strong> vs. <strong>${team2}</strong></p>
+    `,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, add match!",
+    cancelButtonText: "Cancel",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Save new match to Firebase if confirmed
+      database
+        .ref(`matches/${matchId}`)
+        .set(newMatch)
+        .then(() => {
+          showAlert("success", "Match added successfully!", 1500);
+          fetchMatches(); // Refresh the matches list
+          const addMatchModal = bootstrap.Modal.getInstance(
+            document.getElementById("addMatchModal")
+          );
+          addMatchModal.hide(); // Close modal after successful submission
+        })
+        .catch((error) =>
+          showAlert("error", "Error adding match: " + error.message, 1500)
+        );
+    }
+  });
 }
 
 // Create Match Row for Table
@@ -174,12 +195,11 @@ function createMatchRow(matchId, match) {
   const winner = determineWinner(match);
 
   row.innerHTML = `
-    <td>${matchId}</td>
+    <td>${match.matchnum}</td>
     <td>${match.team1}</td>
     <td>${match.team2}</td>
     <td>${match.score1}</td>
     <td>${match.score2}</td>
-    <td>${match.matchTime}</td>
     <td>${getMatchStatus(match)}</td>
     <td>${winner}</td>
     <td>
@@ -254,9 +274,8 @@ function startMatch(matchId) {
         html: `
         <div>Do you want to start this match?</div>
         <br>
-        <div>${matchId}</div>
+        <div>Match ${match.matchnum}</div>
         <div><strong>${match.team1}</strong> vs. <strong>${match.team2}</strong></div>
-        <div>${match.matchTime}</div>
       `,
         icon: "warning",
         showCancelButton: true,
@@ -376,9 +395,8 @@ function deleteMatch(matchId) {
           title: "Are you sure?",
           html: `<div>Do you want to delete this match?</div>
                   <br>
-                  <div>${matchId}</div>
-                  <div><strong>${match.team1}</strong> vs. <strong>${match.team2}</strong></div>
-                  <div>${match.matchTime}</div>`,
+                  <div>Match ${match.matchnum}</div>
+                  <div><strong>${match.team1}</strong> vs. <strong>${match.team2}</strong></div>`,
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -423,7 +441,7 @@ function editMatch(matchId) {
         // Fill modal form with existing match details
         document.getElementById("editTeam1").value = match.team1;
         document.getElementById("editTeam2").value = match.team2;
-        document.getElementById("editMatchTime").value = match.matchTime;
+        document.getElementById("editmatchnum").value = match.matchnum;
 
         // Show the modal
         const editMatchModal = new bootstrap.Modal(
@@ -440,19 +458,19 @@ function editMatch(matchId) {
             // Get the updated team names and match time from the modal form
             const updatedTeam1 = document.getElementById("editTeam1").value;
             const updatedTeam2 = document.getElementById("editTeam2").value;
-            const updatedMatchTime =
-              document.getElementById("editMatchTime").value;
+            const updatedmatchnum =
+              document.getElementById("editmatchnum").value;
 
             // Use SweetAlert for confirmation
             Swal.fire({
               title: "Are you sure?",
               html: `<div>Do you want to save the changes for this match?</div>
                   <br>
+                  <div>Match ${updatedmatchnum}</div>
                   <div><strong>${match.team1}</strong> vs. <strong>${match.team2}</strong></div>
-                  <div>${updatedMatchTime}</div>
                   <div><strong>to</strong></div>
-                  <div><strong>${updatedTeam1}</strong> vs. <strong>${updatedTeam2}</strong></div>
-                  <div>${updatedMatchTime}</div>`,
+                  <div>Match ${updatedmatchnum}</div>
+                  <div><strong>${updatedTeam1}</strong> vs. <strong>${updatedTeam2}</strong></div>`,
               icon: "warning",
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
@@ -467,7 +485,7 @@ function editMatch(matchId) {
                   .update({
                     team1: updatedTeam1,
                     team2: updatedTeam2,
-                    matchTime: updatedMatchTime,
+                    matchnum: updatedmatchnum,
                   })
                   .then(() => {
                     showAlert("success", "Match updated successfully!", 1500);
@@ -579,10 +597,10 @@ function updateScoreInDatabase(matchId, score1, score2) {
       score2: score2,
     })
     .then(() => {
-      console.log("Scores updated successfully!");
+      // console.log("Scores updated successfully!");
     })
     .catch((error) => {
-      console.error("Error updating scores:", error);
+      // console.error("Error updating scores:", error);
     });
 }
 
@@ -595,6 +613,86 @@ function showAlert(icon, title, timer = null) {
     timer,
   });
 }
+
+function loadTeams() {
+  const team1Dropdown = document.getElementById("team1");
+  const team2Dropdown = document.getElementById("team2");
+
+  // Clear existing options
+  team1Dropdown.innerHTML = '<option value="">Select Team 1</option>';
+  team2Dropdown.innerHTML = '<option value="">Select Team 2</option>';
+
+  // Fetch teams from the 'teams' node in Firebase
+  database
+    .ref("teams")
+    .once("value", (snapshot) => {
+      const teams = snapshot.val();
+
+      // Check if teams are fetched
+      if (!teams) {
+        // console.error("No teams found in the database.");
+        return;
+      }
+
+      // Populate dropdown options
+      Object.keys(teams).forEach((teamKey) => {
+        const team = teams[teamKey];
+        const teamOption = `${team.code} - ${team.name}`;
+
+        // Create option elements for both dropdowns
+        const option1 = document.createElement("option");
+        option1.value = team.code;
+        option1.textContent = teamOption;
+
+        const option2 = option1.cloneNode(true); // Clone for the second dropdown
+
+        // Append options to both dropdowns
+        team1Dropdown.appendChild(option1);
+        team2Dropdown.appendChild(option2);
+      });
+
+      // Add event listeners to handle enabling/disabling options
+      team1Dropdown.addEventListener("change", function () {
+        const selectedTeam1 = team1Dropdown.value;
+        // Enable all options first
+        [...team2Dropdown.options].forEach((option) => {
+          option.disabled = false;
+        });
+        // Disable selected team in team2
+        if (selectedTeam1) {
+          [...team2Dropdown.options].forEach((option) => {
+            if (option.value === selectedTeam1) {
+              option.disabled = true;
+            }
+          });
+        }
+      });
+
+      team2Dropdown.addEventListener("change", function () {
+        const selectedTeam2 = team2Dropdown.value;
+        // Enable all options first
+        [...team1Dropdown.options].forEach((option) => {
+          option.disabled = false;
+        });
+        // Disable selected team in team1
+        if (selectedTeam2) {
+          [...team1Dropdown.options].forEach((option) => {
+            if (option.value === selectedTeam2) {
+              option.disabled = true;
+            }
+          });
+        }
+      });
+
+      // console.log("Teams loaded into dropdowns successfully.");
+    })
+    .catch((error) => {
+      // console.error("Error fetching teams:", error);
+    });
+}
+
+// Call loadTeams() when the "Add Match" button is clicked
+document.getElementById("addMatchBtn").addEventListener("click", loadTeams);
 
 // Initial fetch of matches
 fetchMatches();
