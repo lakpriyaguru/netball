@@ -446,9 +446,15 @@ function editMatch(matchId) {
 
       if (match) {
         // Fill modal form with existing match details
-        document.getElementById("editTeam1").value = match.team1;
-        document.getElementById("editTeam2").value = match.team2;
         document.getElementById("editmatchnum").value = match.matchnum;
+        document.getElementById("editmatchtype").value = match.matchtype;
+
+        // Load teams into the dropdowns and select current values
+        editloadTeams("editTeam1", "editTeam2", () => {
+          // Set the selected values for Team 1 and Team 2 after options are loaded
+          document.getElementById("editTeam1").value = match.team1;
+          document.getElementById("editTeam2").value = match.team2;
+        });
 
         // Show the modal
         const editMatchModal = new bootstrap.Modal(
@@ -456,67 +462,74 @@ function editMatch(matchId) {
         );
         editMatchModal.show();
 
-        // Handle form submission for editing the match
-        document
-          .getElementById("editMatchForm")
-          .addEventListener("submit", function handleEditSubmit(e) {
-            e.preventDefault();
+        // Remove any previous event listeners to prevent multiple submissions
+        const editMatchForm = document.getElementById("editMatchForm");
+        editMatchForm.removeEventListener("submit", handleEditSubmit);
 
-            // Get the updated team names and match time from the modal form
-            const updatedTeam1 = document.getElementById("editTeam1").value;
-            const updatedTeam2 = document.getElementById("editTeam2").value;
-            const updatedmatchnum =
-              document.getElementById("editmatchnum").value;
+        // Add a new submit event listener
+        editMatchForm.addEventListener("submit", handleEditSubmit);
 
-            // Use SweetAlert for confirmation
-            Swal.fire({
-              title: "Are you sure?",
-              html: `<div>Do you want to save the changes for this match?</div>
+        function handleEditSubmit(e) {
+          e.preventDefault();
+
+          // Get the updated team names and match number from the form
+          const updatedTeam1 = document.getElementById("editTeam1").value;
+          const updatedTeam2 = document.getElementById("editTeam2").value;
+          const updatedmatchnum = document.getElementById("editmatchnum").value;
+          const updatedmatchtype =
+            document.getElementById("editmatchtype").value;
+
+          // Use SweetAlert for confirmation
+          Swal.fire({
+            title: "Are you sure?",
+            html: `<div>Do you want to save the changes for this match?</div>
                   <br>
-                  <div>Match ${updatedmatchnum}</div>
+                  <div>Match ${match.matchnum}</div>
+                  <div>${match.matchtype}</div>
                   <div><strong>${match.team1}</strong> vs. <strong>${match.team2}</strong></div>
                   <div><strong>to</strong></div>
                   <div>Match ${updatedmatchnum}</div>
+                  <div>${updatedmatchtype}</div>
                   <div><strong>${updatedTeam1}</strong> vs. <strong>${updatedTeam2}</strong></div>`,
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Yes, save it!",
-              cancelButtonText: "Cancel",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                // Update match details in Firebase
-                database
-                  .ref(`matches/${matchId}`)
-                  .update({
-                    team1: updatedTeam1,
-                    team2: updatedTeam2,
-                    matchnum: updatedmatchnum,
-                  })
-                  .then(() => {
-                    showAlert("success", "Match updated successfully!", 1500);
-                    fetchMatches(); // Refresh matches after update
-                    editMatchModal.hide(); // Hide the modal after success
-                  })
-                  .catch((error) => {
-                    showAlert(
-                      "error",
-                      "Error updating match: " + error.message,
-                      1500
-                    );
-                  });
-              }
-            });
-
-            // Remove the event listener to avoid multiple submissions
-            document
-              .getElementById("editMatchForm")
-              .removeEventListener("submit", handleEditSubmit);
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, save it!",
+            cancelButtonText: "Cancel",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Update match details in Firebase
+              database
+                .ref(`matches/${matchId}`)
+                .update({
+                  team1: updatedTeam1,
+                  team2: updatedTeam2,
+                  matchnum: updatedmatchnum,
+                  matchtype: updatedmatchtype,
+                })
+                .then(() => {
+                  showAlert("success", "Match updated successfully!", 1500);
+                  fetchMatches(); // Refresh matches after update
+                  editMatchModal.hide(); // Hide the modal after success
+                })
+                .catch((error) => {
+                  showAlert(
+                    "error",
+                    "Error updating match: " + error.message,
+                    1500
+                  );
+                  console.error("Firebase update error:", error); // Log error for debugging
+                });
+            }
           });
+        }
       } else {
         showAlert("error", "Match not found.", 1500);
       }
+    })
+    .catch((error) => {
+      console.error("Error fetching match:", error);
     });
 }
 
@@ -533,6 +546,9 @@ function scoreMatch(matchId) {
         // Populate modal with team names, logos, and scores
         document.getElementById("scoreTeam1Name").textContent = match.team1;
         document.getElementById("scoreTeam2Name").textContent = match.team2;
+        document.getElementById("scorematchnum").textContent =
+          "Match " + match.matchnum;
+        document.getElementById("scorematchtype").textContent = match.matchtype;
         document.getElementById(
           "scoreTeam1Logo"
         ).src = `../img/uni/${match.team1}.png`; // Add the correct path for logos
@@ -626,8 +642,8 @@ function loadTeams() {
   const team2Dropdown = document.getElementById("team2");
 
   // Clear existing options
-  team1Dropdown.innerHTML = '<option value="">Select Team 1</option>';
-  team2Dropdown.innerHTML = '<option value="">Select Team 2</option>';
+  team1Dropdown.innerHTML = '<option value="?">?</option>';
+  team2Dropdown.innerHTML = '<option value="?">?</option>';
 
   // Fetch teams from the 'teams' node in Firebase
   database
@@ -695,6 +711,60 @@ function loadTeams() {
     })
     .catch((error) => {
       // console.error("Error fetching teams:", error);
+    });
+}
+
+function editloadTeams(editteam1DropdownId, editteam2DropdownId, callback) {
+  const editteam1Dropdown = document.getElementById(editteam1DropdownId);
+  const editteam2Dropdown = document.getElementById(editteam2DropdownId);
+
+  // Clear existing options
+  editteam1Dropdown.innerHTML = '<option value="?">?</option>';
+  editteam2Dropdown.innerHTML = '<option value="?">?</option>';
+
+  // Fetch teams from Firebase
+  database
+    .ref("teams")
+    .once("value")
+    .then((snapshot) => {
+      const teams = snapshot.val();
+      if (!teams) return;
+
+      Object.keys(teams).forEach((teamKey) => {
+        const team = teams[teamKey];
+        const teamOption = `${team.code} - ${team.name}`;
+
+        // Create option elements for both dropdowns
+        const option1 = document.createElement("option");
+        option1.value = team.code;
+        option1.textContent = teamOption;
+
+        const option2 = option1.cloneNode(true); // Clone for the second dropdown
+
+        editteam1Dropdown.appendChild(option1);
+        editteam2Dropdown.appendChild(option2);
+      });
+
+      // Call the callback function after teams are loaded
+      if (typeof callback === "function") callback();
+
+      // Add event listeners for disabling selected options
+      editteam1Dropdown.addEventListener("change", function () {
+        const selectedTeam1 = editteam1Dropdown.value;
+        [...editteam2Dropdown.options].forEach((option) => {
+          option.disabled = option.value === selectedTeam1;
+        });
+      });
+
+      editteam2Dropdown.addEventListener("change", function () {
+        const selectedTeam2 = editteam2Dropdown.value;
+        [...editteam1Dropdown.options].forEach((option) => {
+          option.disabled = option.value === selectedTeam2;
+        });
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching teams:", error);
     });
 }
 

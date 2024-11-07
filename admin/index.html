@@ -145,12 +145,30 @@
                                 <input type="number" class="form-control" id="editmatchnum" min="1" required>
                             </div>
                             <div class="mb-3">
+                                <label for="matchtype" class="form-label">Match Type</label>
+                                <select class="form-control" id="editmatchtype" required>
+                                    <option value="" disabled selected>Select Match Type</option>
+                                    <option value="Group A">Group A</option>
+                                    <option value="Group B">Group B</option>
+                                    <option value="Group C">Group C</option>
+                                    <option value="Group D">Group D</option>
+                                    <option value="Quarter Final">Quarter Final</option>
+                                    <option value="Semi Final">Semi Final</option>
+                                    <option value="Consolation Final">Consolation Final</option>
+                                    <option value="Final">Final</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="editTeam1" class="form-label">Team 1</label>
-                                <input type="text" class="form-control" id="editTeam1" required />
+                                <select class="form-control" id="editTeam1" required>
+                                    <option value="" disabled selected>Select Team 1</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="editTeam2" class="form-label">Team 2</label>
-                                <input type="text" class="form-control" id="editTeam2" required />
+                                <select class="form-control" id="editTeam2" required>
+                                    <option value="" disabled selected>Select Team 2</option>
+                                </select>
                             </div>
                             <button type="submit" class="btn btn-success">Save Changes</button>
                         </form>
@@ -170,6 +188,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="row text-center">
+                            <div class="col-12">
+                                <h4 id="scorematchnum">
+                                </h4>
+                                <h4 id="scorematchtype">
+                                </h4>
+                            </div>
                             <div class="col-6">
                                 <img id="scoreTeam1Logo" src="" alt="Team 1 Logo" class="img-fluid"
                                     style="max-height: 100px;">
