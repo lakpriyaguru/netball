@@ -86,7 +86,7 @@ h5 {
 }
 
 .team-logo {
-    width: 125px;
+    width: 150px;
 }
 
 .team-names {
@@ -102,14 +102,14 @@ h5 {
     font-size: calc(.5rem + 0.4vw); /* Responsive */
     color: #2c3e50;
     text-align: center;
-} */
+}
 
 .score {
-    font-size: 2.5rem; /* Fallback */
+    font-size: 1.9rem; /* Fallback */
     font-weight: bold;
     color: #0b346e;
     font-family: 'Oxanium', sans-serif; /* Ensure quotes are correct */
-    font-size: calc(0.9rem + 1vw);
+    font-size: calc(0.9rem + 1.vw);
     font-optical-sizing: auto;
     font-style: normal;
     font-weight: 1000;
