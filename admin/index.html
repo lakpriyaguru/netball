@@ -62,6 +62,7 @@
                 <thead id="matchesHeading" style="text-align: center;">
                     <tr>
                         <th scope="col">Match #</th>
+                        <th scope="col">Match Type</th>
                         <th scope="col">Team 1</th>
                         <th scope="col">Team 2</th>
                         <th scope="col">Score 1</th>
@@ -93,6 +94,20 @@
                             <div class="mb-3">
                                 <label for="matchnum" class="form-label">Match Number</label>
                                 <input type="number" class="form-control" id="matchnum" min="1" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="matchtype" class="form-label">Match Type</label>
+                                <select class="form-control" id="matchtype" required>
+                                    <option value="" disabled selected>Select Match Type</option>
+                                    <option value="Group A">Group A</option>
+                                    <option value="Group B">Group B</option>
+                                    <option value="Group C">Group C</option>
+                                    <option value="Group D">Group D</option>
+                                    <option value="Quarter Final">Quarter Final</option>
+                                    <option value="Semi Final">Semi Final</option>
+                                    <option value="Consolation Final">Consolation Final</option>
+                                    <option value="Final">Final</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="team1" class="form-label">Team 1</label>
@@ -131,15 +146,11 @@
                             </div>
                             <div class="mb-3">
                                 <label for="editTeam1" class="form-label">Team 1</label>
-                                <select class="form-control" id="editteam1" required>
-                                    <option value="" disabled selected>Select Team 1</option>
-                                </select>
+                                <input type="text" class="form-control" id="editTeam1" required />
                             </div>
                             <div class="mb-3">
                                 <label for="editTeam2" class="form-label">Team 2</label>
-                                <select class="form-control" id="editteam2" required>
-                                    <option value="" disabled selected>Select Team 2</option>
-                                </select>
+                                <input type="text" class="form-control" id="editTeam2" required />
                             </div>
                             <button type="submit" class="btn btn-success">Save Changes</button>
                         </form>

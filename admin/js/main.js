@@ -139,6 +139,7 @@ function handleAddMatch(e) {
   const team1 = document.getElementById("team1").value;
   const team2 = document.getElementById("team2").value;
   const matchnum = document.getElementById("matchnum").value;
+  const matchtype = document.getElementById("matchtype").value;
 
   // Generate a random match ID
   const matchId = generateRandomMatchId();
@@ -148,6 +149,7 @@ function handleAddMatch(e) {
     team1,
     team2,
     matchnum,
+    matchtype,
     score1: 0,
     score2: 0,
     status: 0,
@@ -160,6 +162,7 @@ function handleAddMatch(e) {
     html: `
       <p>You are about to add a match:</p>
       <p>Match ${matchnum}</p>
+      <p>${matchtype}</p>
       <p><strong>${team1}</strong> vs. <strong>${team2}</strong></p>
     `,
     icon: "warning",
@@ -196,6 +199,7 @@ function createMatchRow(matchId, match) {
 
   row.innerHTML = `
     <td>${match.matchnum}</td>
+    <td>${match.matchtype}</td>
     <td>${match.team1}</td>
     <td>${match.team2}</td>
     <td>${match.score1}</td>
@@ -275,6 +279,7 @@ function startMatch(matchId) {
         <div>Do you want to start this match?</div>
         <br>
         <div>Match ${match.matchnum}</div>
+        <div>${match.matchtype}</div>
         <div><strong>${match.team1}</strong> vs. <strong>${match.team2}</strong></div>
       `,
         icon: "warning",
@@ -327,7 +332,8 @@ function finishMatch(matchId) {
           html: `
             <div>Do you want to finish this match?</div>
             <br>
-            <div>${matchId}</div>
+            <div>Match ${match.matchnum}</div>
+            <div>${match.matchtype}</div>
             <div><strong>${match.team1}</strong> vs. <strong>${match.team2}</strong></div>
             <div><strong>${match.score1}</strong> - <strong>${match.score2}</strong></div>
             <div>Select Winner:
@@ -396,6 +402,7 @@ function deleteMatch(matchId) {
           html: `<div>Do you want to delete this match?</div>
                   <br>
                   <div>Match ${match.matchnum}</div>
+                  <div>${match.matchtype}</div>
                   <div><strong>${match.team1}</strong> vs. <strong>${match.team2}</strong></div>`,
           icon: "warning",
           showCancelButton: true,
