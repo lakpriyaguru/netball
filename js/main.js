@@ -82,9 +82,8 @@ function createMatchCard(match) {
         }.png" alt="${match.team1} Logo" class="team-logo img-fluid">
       </div>
       <div class="col-4 text-center match-info">
-        <div class="match-id">Match ${
-          match.matchnum
-        }</div> <!-- Dynamic match ID -->
+        <div class="match-id">Match ${match.matchnum}</div>
+        <div class="match-id">${match.matchtype}</div>
         <div class="team-names">${match.team1} vs ${match.team2}</div>
         <div class="score">
           ${
@@ -96,7 +95,6 @@ function createMatchCard(match) {
           }
         </div>
         <div class="winner-text ${matchTextClass}">${matchText}</div>
-        <div class="">Group A Match</div>
       </div>
       <div class="col-4 text-center">
         <img src="img/uni/${

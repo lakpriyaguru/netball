@@ -99,7 +99,7 @@ h5 {
 
 .match-id{
     font-size: 1.5rem; /* Fallback */
-    font-size: calc(.5rem + 0.5vw); /* Responsive */
+    font-size: calc(.5rem + 0.4vw); /* Responsive */
     color: #2c3e50;
     text-align: center;
 } */
